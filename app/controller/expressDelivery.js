@@ -68,8 +68,9 @@ class ExpressDeliveryController extends Controller {
     async searchWaybill() {
         const { ctx, app } = this;
         const waybillInfo = await ctx.service.expressDelivery.searchWaybill(ctx.request.body);
+        console.log(waybillInfo);
         if(waybillInfo) {
-            waybillInfo.forEach(item => {
+            waybillInfo.list.forEach(item => {
                 item.receiveLocation = JSON.parse(item.receiveLocation);
                 item.sendLocation = JSON.parse(item.sendLocation);
             })
@@ -77,6 +78,36 @@ class ExpressDeliveryController extends Controller {
                 code: 200,
                 msg: '查询成功！',
                 data: waybillInfo
+            }
+        }
+    }
+    // 运单评分
+    async setRate() {
+        const { ctx, app } = this;
+        const rateValue = await ctx.service.expressDelivery.setRate(ctx.request.body);
+        if(rateValue) {
+            ctx.body = {
+                code: 200,
+                msg: '评价成功！',
+                data: null
+            }
+        }
+    }
+    // 运单删除
+    async deleteWaybill() {
+        const { ctx, app } = this;
+        const result = await ctx.service.expressDelivery.deleteWaybill(ctx.query.id);
+        if(result.affectedRows === 1) {
+            ctx.body = {
+                code: 200,
+                msg: '删除成功！',
+                data: null
+            }
+        } else {
+            ctx.body = {
+                code: 500,
+                msg: '删除失败！',
+                data: null
             }
         }
     }

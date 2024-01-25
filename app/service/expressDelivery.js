@@ -30,14 +30,61 @@ class ExpressDeliveryService extends Service {
   // 运单查询
   async searchWaybill(params) {
     const { ctx, app } = this;
+    const { type, phone, currentPage, pageSize } = params;
+    let page = currentPage || 1;
+    let limit = pageSize || 5;
+    // 计算分页偏移量
+    const offset = (page - 1) * limit;
     try {
-      const waybillInfo = await app.mysql.query(
-        `SELECT * FROM expressDelivery WHERE ${params.type}='${params.phone}'`
-      );
-      return waybillInfo;
+      const countSql = `SELECT COUNT(*) AS total FROM expressDelivery WHERE ${type} = ?`;
+      const listSql = `SELECT * FROM expressDelivery WHERE ${type} = ? LIMIT ?, ?`;
+      const [countResult, list] = await Promise.all([
+        app.mysql.query(countSql, [phone]),
+        app.mysql.query(listSql, [phone, offset, limit])
+      ])
+      return {
+        total: countResult[0].total,
+        list
+      }
     } catch (error) {
-       console.log(error);
-       return null;
+      console.log(error);
+      return null;
+    }
+  }
+  // 运单评分
+  async setRate(params) {
+    console.log(params);
+    const { id, rate } = params;
+    try {
+      const result = await this.app.mysql.update(
+        "expressDelivery",
+        {
+          rate,
+        },
+        {
+          where: {
+            id,
+          },
+        }
+      );
+      if (result) {
+        return result;
+      }
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
+  // 删除订单
+  async deleteWaybill(id) {
+    try {
+      const result = await this.app.mysql.delete("expressDelivery", { id });
+      if (result) {
+        return result;
+      }
+    } catch (error) {
+      console.log(error);
+      return null;
     }
   }
 }
