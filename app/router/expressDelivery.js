@@ -8,4 +8,5 @@ module.exports = app => {
     router.post('/expressDelivery/searchWaybill', jwt, controller.expressDelivery.searchWaybill);
     router.post('/expressDelivery/setRate', jwt, controller.expressDelivery.setRate);
     router.delete('/expressDelivery/deleteWaybill', jwt, controller.expressDelivery.deleteWaybill);
+    router.get('/expressDelivery/trackOrder', jwt, controller.expressDelivery.trackOrder);
 }

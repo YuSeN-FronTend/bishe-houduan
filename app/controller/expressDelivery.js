@@ -68,7 +68,6 @@ class ExpressDeliveryController extends Controller {
     async searchWaybill() {
         const { ctx, app } = this;
         const waybillInfo = await ctx.service.expressDelivery.searchWaybill(ctx.request.body);
-        console.log(waybillInfo);
         if(waybillInfo) {
             waybillInfo.list.forEach(item => {
                 item.receiveLocation = JSON.parse(item.receiveLocation);
@@ -108,6 +107,29 @@ class ExpressDeliveryController extends Controller {
                 code: 500,
                 msg: '删除失败！',
                 data: null
+            }
+        }
+    }
+    // 跟据订单号查询订单
+    async trackOrder() {
+        const { ctx, app } = this;
+        const orderInfo = await ctx.service.expressDelivery.trackOrder(ctx.query.trackNumber);
+        if(orderInfo) {
+            orderInfo.forEach(item => {
+                item.receiveLocation = JSON.parse(item.receiveLocation);
+                item.sendLocation = JSON.parse(item.sendLocation);
+            })
+
+            ctx.body = {
+                code: 200,
+                msg: '查询成功！',
+                data: orderInfo,
+            }
+        } else {
+            ctx.body = {
+                code: 500,
+                msg: '查询失败！',
+                data: null,
             }
         }
     }

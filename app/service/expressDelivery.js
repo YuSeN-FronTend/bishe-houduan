@@ -87,6 +87,23 @@ class ExpressDeliveryService extends Service {
       return null;
     }
   }
+  // 根据订单号查询订单
+  async trackOrder(trackNumber) {
+    const { ctx, app } = this;
+    try {
+      const orderInfo = await app.mysql.select('expressDelivery', {
+        where: {
+          trackNumber
+        }
+      })
+      if(orderInfo) {
+        return orderInfo;
+      }
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+}
 }
 
 module.exports = ExpressDeliveryService;
