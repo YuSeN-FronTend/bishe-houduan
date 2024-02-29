@@ -7,4 +7,5 @@ module.exports = app => {
   require('./router/user')(app)
   require('./router/index')(app)
   require('./router/expressDelivery')(app)
+  require('./router/echartsData')(app)
 };
