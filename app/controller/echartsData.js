@@ -53,12 +53,59 @@ class ExpressDeliveryController extends Controller {
         },
       };
     } catch (error) {
-        console.log(error);
-        ctx.body = {
-            code: 500,
-            msg: "获取失败！（数据库原因）",
-            data: null
-          };
+      console.log(error);
+      ctx.body = {
+        code: 500,
+        msg: "获取失败！（数据库原因）",
+        data: null,
+      };
+    }
+  }
+  // 获取近6个月销售金额统计
+  async saleAmountCount() {
+    const { ctx } = this;
+
+    try {
+      const saleData = await ctx.service.echartsData.saleAmountCount();
+      ctx.body = {
+        code: 200,
+        msg: "获取成功！",
+        data: saleData,
+      };
+    } catch (error) {
+      console.log(error);
+      ctx.body = {
+        code: 500,
+        msg: "获取失败！（数据库原因）",
+        data: null,
+      };
+    }
+  }
+  // 获取物品种类
+  async goodsNameClassify() {
+    const { ctx } = this;
+    try {
+      const goodsCount = await ctx.service.echartsData.goodsNameClassify();
+      let goodObj = {};
+      goodsCount.forEach((item) => {
+        if (Object.keys(goodObj).includes(item.goodsName)) {
+          goodObj[item.goodsName]++;
+        } else {
+          goodObj[item.goodsName] = 1;
+        }
+      });
+      ctx.body = {
+        code: 200,
+        msg: "获取成功！",
+        data: goodObj,
+      };
+    } catch (error) {
+      console.log(error);
+      ctx.body = {
+        code: 500,
+        msg: "获取失败！（数据库原因）",
+        data: null,
+      };
     }
   }
 }

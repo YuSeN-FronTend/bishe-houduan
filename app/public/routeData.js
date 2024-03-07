@@ -6,26 +6,14 @@ let adminRoute = [
         component: 'layout',
         children: [
             {
-                path: '/group',
-                name: 'group',
-                redirect: '/backstage',
+                path: '/companySearch',
+                name: 'companySearch',
+                component: 'group/companySearch/index',
                 meta: {
                     type: 'first',
-                    name: '导航一',
-                    icon: 'Menu'
-                },
-                children: [
-                    {
-                        path: '/backstage',
-                        name: 'Backstage',
-                        component: 'group/asidefirst/backstage',
-                        meta: {
-                            type: 'second',
-                            name: '首页',
-                            icon: 'House'
-                        }
-                    },
-                ]
+                    name: '运单查询',
+                    icon: 'Search'
+                }
             },
             {
                 path: '/adminCenter',

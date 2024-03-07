@@ -51,6 +51,30 @@ class ExpressDeliveryService extends Service {
       return null;
     }
   }
+  //企业运单查询
+  async companySearchWaybill(params) {
+    const { ctx, app } = this;
+    const { companyName, currentPage, pageSize } = params;
+    let page = currentPage || 1;
+    let limit = pageSize || 5;
+    // 计算分页偏移量
+    const offset = (page - 1) * limit;
+    try {
+      const countSql = `SELECT COUNT(*) AS total FROM expressDelivery WHERE companyName = ?`;
+      const listSql = `SELECT * FROM expressDelivery WHERE companyName = ? LIMIT ?, ?`;
+      const [countResult, list] = await Promise.all([
+        app.mysql.query(countSql, [companyName]),
+        app.mysql.query(listSql, [companyName, offset, limit])
+      ])
+      return {
+        total: countResult[0].total,
+        list
+      }
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
   // 运单评分
   async setRate(params) {
     console.log(params);

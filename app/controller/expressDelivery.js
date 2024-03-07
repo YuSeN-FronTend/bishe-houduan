@@ -80,6 +80,22 @@ class ExpressDeliveryController extends Controller {
             }
         }
     }
+    // 企业运单查询
+    async companySearchWaybill() {
+        const { ctx, app } = this;
+        const waybillInfo = await ctx.service.expressDelivery.companySearchWaybill(ctx.request.body);
+        if(waybillInfo) {
+            waybillInfo.list.forEach(item => {
+                item.receiveLocation = JSON.parse(item.receiveLocation);
+                item.sendLocation = JSON.parse(item.sendLocation);
+            })
+            ctx.body = {
+                code: 200,
+                msg: '查询成功！',
+                data: waybillInfo
+            }
+        }
+    }
     // 运单评分
     async setRate() {
         const { ctx, app } = this;
