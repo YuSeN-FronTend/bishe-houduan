@@ -2,7 +2,7 @@
 
 const Service = require("egg").Service;
 
-class UserService extends Service {
+class EchartsDataService extends Service {
   // 首页2023年最受欢迎的快递公司汇总
   async dashboardBarEcharts() {
     const { app } = this;
@@ -40,4 +40,4 @@ class UserService extends Service {
   }
 }
 
-module.exports = UserService;
+module.exports = EchartsDataService;

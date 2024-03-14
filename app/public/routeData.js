@@ -16,13 +16,13 @@ let adminRoute = [
                 }
             },
             {
-                path: '/adminCenter',
-                name: 'adminCenter',
-                component: 'group/adminCenter',
+                path: '/customerService',
+                name: 'customerService',
+                component: 'group/customerService/index',
                 meta: {
                     type: 'first',
-                    name: '配置中心',
-                    icon: 'Setting'
+                    name: '客服中心',
+                    icon: 'Service'
                 }
             },
             {
@@ -67,13 +67,13 @@ let personRoute = [
                 }
             },
             {
-                path: '/adminCenter',
-                name: 'adminCenter',
-                component: 'group/adminCenter',
+                path: '/customerService',
+                name: 'customerService',
+                component: 'group/customerService/index',
                 meta: {
                     type: 'first',
-                    name: '配置中心',
-                    icon: 'Setting'
+                    name: '客服中心',
+                    icon: 'Service'
                 }
             },
             {

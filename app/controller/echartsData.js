@@ -2,7 +2,7 @@
 
 const Controller = require("egg").Controller;
 
-class ExpressDeliveryController extends Controller {
+class EchartsDataController extends Controller {
   // 首页2023年最受欢迎的快递公司汇总
   async dashboardBarEcharts() {
     const { app, ctx } = this;
@@ -110,4 +110,4 @@ class ExpressDeliveryController extends Controller {
   }
 }
 
-module.exports = ExpressDeliveryController;
+module.exports = EchartsDataController;
